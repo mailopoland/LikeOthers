@@ -1,0 +1,1 @@
+W razie problemów z dzia³aniem bazy danych proszê utworzyæ now¹ z pliku SQLQuery1.sql i podpi¹æ do projektu, zamiast aktualnej (z takimi samymi parametrami).

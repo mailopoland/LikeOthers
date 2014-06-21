@@ -1,0 +1,24 @@
+﻿@model IEnumerable<likeothers.Models.Option>
+
+@{ 
+    ViewBag.Title = "Question";
+    var next = Model.First().IdQuestion + 1;
+}
+
+@section styles{ @Styles.Render("~/Content/Question/css") }
+<h2>@Html.DisplayFor(model => model.First().Question.Question1)</h2>
+
+<div class="container">
+    @foreach (var item in Model)
+    {
+        <div class="image">
+            @using (Html.BeginForm("Question", "Test", new { id = next }))
+            {
+                <input style="display: none" value=@item.Id type="number" name="selOp" />
+                <input value="" class="picOpt" type="submit" style="background: url('/Images/@item.Image') no-repeat;background-size:contain; background-position:center;" />
+            }
+            <div class="desc">@Html.DisplayFor(modelItem => item.Description)</div>
+        </div>
+    }
+</div>
+

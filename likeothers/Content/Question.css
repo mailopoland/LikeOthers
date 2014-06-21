@@ -1,0 +1,18 @@
+﻿.picOpt{
+    height: 400px;
+    width: 400px;
+    border : none;
+}
+
+.container{
+    width: 100%;
+    text-align: center;  
+    margin-top: 20px;
+    margin-bottom: 50px;
+}
+
+.image{
+    display: inline-block;
+    margin-left: 2.5%;
+    margin-right: 2.5%;
+}

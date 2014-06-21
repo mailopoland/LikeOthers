@@ -1,0 +1,16 @@
+﻿@model likeothers.Models.ResultText
+
+@{
+    ViewBag.Title = "Result";
+}
+
+<h2>Wyniki</h2>
+
+<div class="result">
+    Zabawa skończona. Wszystko stało się jasne. <br />
+    @ViewBag.ResultText <br />
+    Twoje odpowiedzi pokrywały się w @ViewBag.ResultPoints% z odpowiedziami innych.
+</div>
+<br />
+<input type="button" value="Jeszcze raz" onclick="location.href='@Url.Action("Index","Home")'" />
+

@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Options">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="IdQuestion" Type="int" Nullable="false" />
+    <Property Name="Image" Type="nvarchar" MaxLength="15" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="25" />
+  </EntityType>
+  <EntityType Name="Questions">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Question" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ResultTexts">
+    <Key>
+      <PropertyRef Name="Min" />
+      <PropertyRef Name="Max" />
+    </Key>
+    <Property Name="Min" Type="int" Nullable="false" />
+    <Property Name="Max" Type="int" Nullable="false" />
+    <Property Name="Text" Type="nvarchar" MaxLength="200" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UsersResults">
+    <Key>
+      <PropertyRef Name="IdOption" />
+    </Key>
+    <Property Name="IdOption" Type="int" Nullable="false" />
+    <Property Name="Amount" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__Options">
+    <End Role="Questions" Type="Self.Questions" Multiplicity="1" />
+    <End Role="Options" Type="Self.Options" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Questions">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Options">
+        <PropertyRef Name="IdQuestion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__UsersResults">
+    <End Role="Options" Type="Self.Options" Multiplicity="1" />
+    <End Role="UsersResults" Type="Self.UsersResults" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Options">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UsersResults">
+        <PropertyRef Name="IdOption" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ModelStoreContainer">
+    <EntitySet Name="Options" EntityType="Self.Options" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Questions" EntityType="Self.Questions" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ResultTexts" EntityType="Self.ResultTexts" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UsersResults" EntityType="Self.UsersResults" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Options" Association="Self.FK__Options">
+      <End Role="Questions" EntitySet="Questions" />
+      <End Role="Options" EntitySet="Options" />
+    </AssociationSet>
+    <AssociationSet Name="FK__UsersResults" Association="Self.FK__UsersResults">
+      <End Role="Options" EntitySet="Options" />
+      <End Role="UsersResults" EntitySet="UsersResults" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

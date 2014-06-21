@@ -1,0 +1,16 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+    List<int> list = new List<int>();
+    Session["allSelOp"] = list;
+}
+<div class="content">
+    <h1>Like others?</h1>
+    <h3>Sprawdz jak bardzo różnisz się od reszty otaczającego świata. <br /></h3>
+    <h4>Po kliknięciu przycisku Start rozpoczynasz grę. Odpowiadaj na pytania wybierając jeden z obrazków. <br />
+        Na koniec dowiesz się w jakim stopniu Twoje wybory pokrywały się z odpowiedziami innych graczy.</h4>
+    @using (Html.BeginForm("Question", "Test", new { id = 1 }))
+    {
+        <input type="submit" value="Start"/>
+    }
+    
+</div>

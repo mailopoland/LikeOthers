@@ -1,0 +1,219 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="likeothersdbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Options">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="IdQuestion" Type="int" Nullable="false" />
+          <Property Name="Image" Type="char" MaxLength="15" Nullable="false" />
+          <Property Name="Description" Type="nchar" MaxLength="25" />
+        </EntityType>
+        <EntityType Name="Questions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Question" Type="nchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ResultTexts">
+          <Key>
+            <PropertyRef Name="Min" />
+          </Key>
+          <Property Name="Min" Type="int" Nullable="false" />
+          <Property Name="Max" Type="int" Nullable="false" />
+          <Property Name="Text" Type="nchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UsersResults">
+          <Key>
+            <PropertyRef Name="IdOption" />
+          </Key>
+          <Property Name="IdOption" Type="int" Nullable="false" />
+          <Property Name="Amount" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Options">
+          <End Role="Questions" Type="Self.Questions" Multiplicity="1" />
+          <End Role="Options" Type="Self.Options" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Questions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Options">
+              <PropertyRef Name="IdQuestion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UsersResults">
+          <End Role="Options" Type="Self.Options" Multiplicity="1" />
+          <End Role="UsersResults" Type="Self.UsersResults" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Options">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UsersResults">
+              <PropertyRef Name="IdOption" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="likeothersdbModelStoreContainer">
+          <EntitySet Name="Options" EntityType="Self.Options" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Questions" EntityType="Self.Questions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ResultTexts" EntityType="Self.ResultTexts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UsersResults" EntityType="Self.UsersResults" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Options" Association="Self.FK__Options">
+            <End Role="Questions" EntitySet="Questions" />
+            <End Role="Options" EntitySet="Options" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UsersResults" Association="Self.FK__UsersResults">
+            <End Role="Options" EntitySet="Options" />
+            <End Role="UsersResults" EntitySet="UsersResults" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="likeothersdbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Option">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="IdQuestion" Type="Int32" Nullable="false" />
+          <Property Name="Image" Type="String" MaxLength="15" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Question" Relationship="Self.FK__Options" FromRole="Options" ToRole="Questions" />
+          <NavigationProperty Name="UsersResult" Relationship="Self.FK__UsersResults" FromRole="Options" ToRole="UsersResults" />
+        </EntityType>
+        <EntityType Name="Question">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Question1" Type="String" MaxLength="100" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Options" Relationship="Self.FK__Options" FromRole="Questions" ToRole="Options" />
+        </EntityType>
+        <EntityType Name="ResultText">
+          <Key>
+            <PropertyRef Name="Min" />
+          </Key>
+          <Property Name="Min" Type="Int32" Nullable="false" />
+          <Property Name="Max" Type="Int32" Nullable="false" />
+          <Property Name="Text" Type="String" MaxLength="200" FixedLength="true" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UsersResult">
+          <Key>
+            <PropertyRef Name="IdOption" />
+          </Key>
+          <Property Name="IdOption" Type="Int32" Nullable="false" />
+          <Property Name="Amount" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Option" Relationship="Self.FK__UsersResults" FromRole="UsersResults" ToRole="Options" />
+        </EntityType>
+        <Association Name="FK__Options">
+          <End Role="Questions" Type="Self.Question" Multiplicity="1" />
+          <End Role="Options" Type="Self.Option" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Questions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Options">
+              <PropertyRef Name="IdQuestion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UsersResults">
+          <End Role="Options" Type="Self.Option" Multiplicity="1" />
+          <End Role="UsersResults" Type="Self.UsersResult" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Options">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UsersResults">
+              <PropertyRef Name="IdOption" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EntitiesConnection" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Options" EntityType="Self.Option" />
+          <EntitySet Name="Questions" EntityType="Self.Question" />
+          <EntitySet Name="ResultTexts" EntityType="Self.ResultText" />
+          <EntitySet Name="UsersResults" EntityType="Self.UsersResult" />
+          <AssociationSet Name="FK__Options" Association="Self.FK__Options">
+            <End Role="Questions" EntitySet="Questions" />
+            <End Role="Options" EntitySet="Options" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UsersResults" Association="Self.FK__UsersResults">
+            <End Role="Options" EntitySet="Options" />
+            <End Role="UsersResults" EntitySet="UsersResults" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="likeothersdbModelStoreContainer" CdmEntityContainer="EntitiesConnection">
+          <EntitySetMapping Name="Options">
+            <EntityTypeMapping TypeName="likeothersdbModel.Option">
+              <MappingFragment StoreEntitySet="Options">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdQuestion" ColumnName="IdQuestion" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Questions">
+            <EntityTypeMapping TypeName="likeothersdbModel.Question">
+              <MappingFragment StoreEntitySet="Questions">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Question1" ColumnName="Question" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ResultTexts">
+            <EntityTypeMapping TypeName="likeothersdbModel.ResultText">
+              <MappingFragment StoreEntitySet="ResultTexts">
+                <ScalarProperty Name="Min" ColumnName="Min" />
+                <ScalarProperty Name="Max" ColumnName="Max" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UsersResults">
+            <EntityTypeMapping TypeName="likeothersdbModel.UsersResult">
+              <MappingFragment StoreEntitySet="UsersResults">
+                <ScalarProperty Name="IdOption" ColumnName="IdOption" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

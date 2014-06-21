@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Option">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="IdQuestion" Type="Int32" Nullable="false" />
+    <Property Name="Image" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Question" Relationship="Self.FK__Options__IdQuest__1273C1CD" FromRole="Options" ToRole="Questions" />
+    <NavigationProperty Name="UsersResult" Relationship="Model.FK__UsersResu__IdOpt__239E4DCF" FromRole="Option" ToRole="UsersResult" />
+  </EntityType>
+  <EntityType Name="Question">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Question1" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Options" Relationship="Self.FK__Options__IdQuest__1273C1CD" FromRole="Questions" ToRole="Options" />
+  </EntityType>
+  <EntityType Name="ResultText">
+    <Key>
+      <PropertyRef Name="Min" />
+      <PropertyRef Name="Max" />
+    </Key>
+    <Property Name="Min" Type="Int32" Nullable="false" />
+    <Property Name="Max" Type="Int32" Nullable="false" />
+    <Property Name="Text" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__Options__IdQuest__1273C1CD">
+    <End Role="Questions" Type="Self.Question" Multiplicity="1" />
+    <End Role="Options" Type="Self.Option" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Questions">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Options">
+        <PropertyRef Name="IdQuestion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="EntitiesConnection" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Options" EntityType="Self.Option" />
+    <EntitySet Name="Questions" EntityType="Self.Question" />
+    <EntitySet Name="ResultTexts" EntityType="Self.ResultText" />
+    <AssociationSet Name="FK__Options__IdQuest__1273C1CD" Association="Self.FK__Options__IdQuest__1273C1CD">
+      <End Role="Questions" EntitySet="Questions" />
+      <End Role="Options" EntitySet="Options" />
+    </AssociationSet>
+    <EntitySet Name="UsersResults" EntityType="Model.UsersResult" />
+    <AssociationSet Name="FK__UsersResu__IdOpt__239E4DCF" Association="Model.FK__UsersResu__IdOpt__239E4DCF">
+      <End Role="Option" EntitySet="Options" />
+      <End Role="UsersResult" EntitySet="UsersResults" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="UsersResult">
+    <Key>
+      <PropertyRef Name="IdOption" />
+    </Key>
+    <Property Name="IdOption" Type="Int32" Nullable="false" />
+    <Property Name="Amount" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Option" Relationship="Model.FK__UsersResu__IdOpt__239E4DCF" FromRole="UsersResult" ToRole="Option" />
+  </EntityType>
+  <Association Name="FK__UsersResu__IdOpt__239E4DCF">
+    <End Type="Model.Option" Role="Option" Multiplicity="1" />
+    <End Type="Model.UsersResult" Role="UsersResult" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Option">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UsersResult">
+        <PropertyRef Name="IdOption" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
